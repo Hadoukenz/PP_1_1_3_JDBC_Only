@@ -11,24 +11,22 @@ public class Util {
 
     private static Connection connection = null;
 
-    public static Connection openCon() {
-        try {
-            connection = DriverManager.getConnection(URL, NAME, PASS);
-            return connection;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+    public static Connection openConnection() {
+        if (connection == null) {
+            try {
+                connection = DriverManager.getConnection(URL, NAME, PASS);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
+        return connection;
     }
 
-    public static void closeCon() {
+    public static void closeConnection() {
         try {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public static Connection getCon() {
-        return connection;
     }
 }
